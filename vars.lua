@@ -1,0 +1,8 @@
+MainMod = "SUPER"
+Terminal = "ghostty"
+FileManager = "nautilus"
+Menu = "wofi --show drun"
+Browser = "zen-beta"
+CodeEditor = "zeditor"
+Screenshot = "hyprshot"
+Lock = "hyprlock"
