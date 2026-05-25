@@ -1,8 +1,10 @@
-MainMod = "SUPER"
-Terminal = "ghostty"
-FileManager = "nautilus"
-Menu = "wofi --show drun"
-Browser = "zen-beta"
-CodeEditor = "zeditor"
-Screenshot = "hyprshot"
-Lock = "hyprlock"
+return {
+    mainMod = "SUPER",
+    terminal = "ghostty",
+    fileManager = "nautilus",
+    menu = "wofi --show drun",
+    browser = "zen-beta",
+    codeEditor = "zeditor",
+    screenshot = "hyprshot",
+    lock = "hyprlock"
+}
