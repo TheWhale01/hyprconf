@@ -40,6 +40,7 @@ end, { locked = true })
 hl.bind("switch:off:Lid Switch", function ()
     hl.monitor({
         output = "eDP-1",
+        disabled = false,
         mode = "preferred",
         position = "auto",
         scale = 1.5
