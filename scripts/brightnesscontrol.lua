@@ -29,10 +29,8 @@ return function (action)
     local step = 5
     local current = get_brightness()
 
-    if current == 0 then
+    if (current == 0 and action == "d") or (current == 100 and action == "i") then
         return
-    elseif current < 10 then
-        step = 1
     end
     if action == "i" or action == "-i" then
         os.execute(string.format("brightnessctl set +%d%%", step))
