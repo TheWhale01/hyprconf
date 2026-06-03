@@ -1,5 +1,6 @@
 local vars = require "vars"
 local brightnesscontrol = require "scripts.brightnesscontrol"
+local volumecontrol = require "scripts.volumecontrol"
 
 hl.bind(vars.mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(vars.mainMod .. " + T", hl.dsp.exec_cmd(vars.terminal))
@@ -23,11 +24,11 @@ hl.bind(vars.mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1"}))
 hl.bind(vars.mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1"}))
 hl.bind(vars.mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(vars.mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("~/.config/hypr/scripts/volumecontrol.sh -o i"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("~/.config/hypr/scripts/volumecontrol.sh -o d"), { locked = true, repeating = true })
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("./scripts/volumecontrol.sh -o m"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp", function() brightnesscontrol("i") end, { locked = true })
-hl.bind("XF86MonBrightnessDown", function() brightnesscontrol("d") end, { locked = true })
+hl.bind("XF86AudioRaiseVolume", function() volumecontrol("i") end, { locked = true, repeating = true })
+    hl.bind("XF86AudioLowerVolume", function() volumecontrol("d") end, { locked = true, repeating = true })
+hl.bind("XF86AudioMute", function() volumecontrol("m") end, { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", function() brightnesscontrol("i") end, { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", function() brightnesscontrol("d") end, { locked = true, repeating = true })
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })

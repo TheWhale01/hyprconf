@@ -1,12 +1,4 @@
-local function capture(cmd)
-    local f = io.popen(cmd, 'r')
-    if not f then
-        return ""
-    end
-    local s = f:read("*a")
-    f:close()
-    return s:gsub("^%s*(.-)%s*$", "%1")
-end
+require "scripts.common"
 
 local function send_notification()
     local info = capture("brightnessctl info")
