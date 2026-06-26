@@ -1,6 +1,7 @@
 require "scripts.common"
 
 local step = 5
+local notify_timer = nil
 
 local function get_sink()
     return capture("pamixer --get-default-sink")
@@ -11,48 +12,36 @@ local function get_volume()
     return capture("pamixer --get-volume")
 end
 
-local function notify_mute()
-    local state = capture("pamixer --get-mute")
-    local sink = get_sink()
-    local state_str
-    if state == "true" then
-        state_str = "muted"
-    else
-        state_str = "unmuted"
-    end
-    os.execute(string.format("notify-send -a '%s', -r 8 -t 800 %s %s", "pontos notify", state_str, sink))
-end
-
-local function notify_vol(vol)
+local function send_vol_notification()
+    local vol = tonumber(get_volume()) or 0
     local bar = string.rep(".", math.floor(vol / 15))
     local nsink = get_sink()
-    local cmd = string.format("notify-send -a '%s' -r 8 -t 800 '%s%s' '%s'", "pontos notify", vol, bar, nsink)
 
-    os.execute(cmd)
+    hl.exec_cmd(string.format("notify-send -a '%s' -r 8 -t 800 '%s%s' '%s'", "pontos notify", vol, bar, nsink))
 end
 
-local function mute()
-    os.execute("pamixer -t")
-    notify_mute()
+local function send_mute_notification()
+    local state = capture("pamixer --get-mute")
+    local sink = get_sink()
+    local state_str = (state == "true") and "muted" or "unmuted"
+
+    hl.exec_cmd(string.format("notify-send -a '%s' -r 8 -t 800 '%s' '%s'", "pontos notify", state_str, sink))
 end
 
-local function change_volume(action)
-    local volume = get_volume()
-    local cmd = string.format("pamixer -%s %s", action, step)
-    if action == "i" and volume == 100 then
-        return
-    elseif action == "d" and volume == 0 then
-        return
+local function queue_notification(type)
+    if notify_timer then
+        notify_timer:set_enabled(false)
     end
-    os.execute(cmd)
-    volume = get_volume()
-    notify_vol(volume)
+    local fn = (type == "mute") and send_mute_notification or send_vol_notification
+    notify_timer = hl.timer(fn, { timeout = 150, type = "oneshot" })
 end
 
 return function (action)
     if action == "i" or action == "d" then
-        change_volume(action)
+        hl.exec_cmd(string.format("pamixer -%s %s", action, step))
+        queue_notification("vol")
     elseif action == "m" then
-        mute()
+        hl.exec_cmd("pamixer -t")
+        queue_notification("mute")
     end
 end

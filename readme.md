@@ -59,6 +59,16 @@ it can be used on any distribution that supports hyprland. Feel free to use it !
 
 ### Other distros
 
+You'll need to install these dependencies for this configuration to work as expected:
+
+- [brightnessctl](https://github.com/Hummer12007/brightnessctl)
+- [pamixer](https://github.com/cdemoulins/pamixer)
+- [playerctl](https://github.com/altdesktop/playerctl)
+- [pulseaudio](https://gitlab.freedesktop.org/pulseaudio/pulseaudio)
+- [libnotify](https://gitlab.gnome.org/GNOME/libnotify)
+
+Once you have these installed you just need to clone the repository in the right place and launch Hyprland
+
 ```bash
 git clone https://github.com/TheWhale01/hyprconf ~/.config/hypr
 Hyprland

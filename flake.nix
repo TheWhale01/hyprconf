@@ -24,7 +24,6 @@
               playerctl
               pulseaudio
               libnotify
-              rofi
             ];
             shellHook = ''
               echo "Entered hyprconf dev env !"
